@@ -161,7 +161,7 @@ const ContactManagement = () => {
   const fetchContacts = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8000/api/contacts');
+      const response = await fetch(`${process.env.REACT_APP_CONTACT_API_URL}`);
       
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -182,7 +182,7 @@ const ContactManagement = () => {
       return;
     }
     try {
-      const response = await fetch(`http://localhost:8000/api/contacts/${id}`, {
+      const response = await fetch(`${process.env.REACT_APP_CONTACT_API_URL}/${id}`, {
         method: 'DELETE',
       });
   
@@ -290,7 +290,7 @@ const BlogManagement = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/posts")
+      .get(`${process.env.REACT_APP_BLOG_API_URL}`)
       .then((res) => {
         setPosts(res.data);
         setIsLoading(false);
@@ -340,7 +340,7 @@ const BlogManagement = () => {
     
     if (!confirmDelete) return;
   
-    axios.delete(`http://localhost:8000/api/posts/${id}`)
+    axios.delete(`${process.env.REACT_APP_BLOG_API_URL}/${id}`)
       .then(() => {
         setPosts(posts.filter(post => post._id !== id));
       })
@@ -354,7 +354,7 @@ const BlogManagement = () => {
     if (currentPost._id) {
       console.log("Attempting to update post with ID:", currentPost._id);
       
-      axios.put(`http://localhost:8000/api/posts/${currentPost._id}`, currentPost)
+      axios.put(`${process.env.REACT_APP_BLOG_API_URL}/${currentPost._id}`, currentPost)
         .then((res) => {
           console.log("Update response:", res.data);
           setPosts(posts.map(post =>
@@ -368,7 +368,7 @@ const BlogManagement = () => {
     } else {
       console.log("Creating new post with data:", currentPost);
       
-      axios.post('http://localhost:8000/api/posts', currentPost)
+      axios.post(`${process.env.REACT_APP_BLOG_API_URL}`, currentPost)
         .then((res) => {
           console.log("Create response:", res.data);
           setPosts([...posts, res.data]);
@@ -561,7 +561,7 @@ const CareersManagement = () => {
   // Fetch jobs on component mount
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/jobs")
+      .get(`${process.env.REACT_APP_JOB_API_URL}`)
       .then((response) => setCareers(response.data))
       .catch((error) => console.error("Error fetching jobs:", error));
   }, []);
@@ -598,7 +598,7 @@ const CareersManagement = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this job?");
     if (!confirmDelete) return;
     // Delete job
-    axios.delete(`http://localhost:8000/api/jobs/${id}`)
+    axios.delete(`${process.env.REACT_APP_JOB_API_URL}/${id}`)
       .then(() => setCareers(careers.filter(job => job._id !== id)))
       .catch((error) => console.error('Error deleting job:', error));
   };
@@ -606,7 +606,7 @@ const CareersManagement = () => {
   const handleSaveJob = () => {
     if (currentJob.id) {
       // Update existing job
-      axios.put(`http://localhost:8000/api/jobs/${currentJob.id}`, currentJob)
+      axios.put(`${process.env.REACT_APP_JOB_API_URL}/${currentJob.id}`, currentJob)
         .then((response) => {
           setCareers(careers.map(job => job._id === currentJob.id ? response.data : job));
           setIsEditing(false);
@@ -614,7 +614,7 @@ const CareersManagement = () => {
         .catch((error) => console.error('Error updating job:', error));
     } else {
       // Create new job
-      axios.post('http://localhost:8000/api/jobs/create', currentJob)
+      axios.post(`${process.env.REACT_APP_JOB_API_URL}/create`, currentJob)
         .then((response) => {
           setCareers([...careers, response.data]);
           setIsEditing(false);

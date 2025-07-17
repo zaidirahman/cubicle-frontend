@@ -16,7 +16,7 @@ const BlogListingPage = () => {
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://localhost:8000/api/posts');
+      const response = await fetch(`${process.env.REACT_APP_BLOG_API_URL}`);
       if (!response.ok) {
         throw new Error('Failed to fetch blogs');
       }
