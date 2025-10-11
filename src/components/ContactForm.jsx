@@ -8,6 +8,7 @@ const ContactForm = () => {
     email: "",
     phone: "",
     location: "",
+    requirements: "",
   });
 
   const [showBanner, setShowBanner] = useState(false);
@@ -36,7 +37,7 @@ const ContactForm = () => {
           type: 'success',
           message: 'Form Submitted!'
         });
-        setFormData({ name: "", email: "", phone: "", location: "" });
+        setFormData({ name: "", email: "", phone: "", location: "", requirements: "" });
       } else {
         setBannerState({
           type: 'error',
@@ -124,6 +125,21 @@ const ContactForm = () => {
               <option value="" disabled>Select Location</option>
               <option value="Gulberg">Gulberg</option>
             </select>
+          </div>
+
+          <div>
+            <label htmlFor="requirements" className="block text-sm font-medium text-gray-700">
+              Requirements
+            </label>
+            <textarea
+              id="requirements"
+              name="requirements"
+              value={formData.requirements}
+              onChange={handleChange}
+              rows={4}
+              placeholder="Tell us about your workspace needs, team size, preferred amenities, etc."
+              className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-yellow-500 focus:outline-none resize-none"
+            />
           </div>
 
           <div className="flex justify-center">

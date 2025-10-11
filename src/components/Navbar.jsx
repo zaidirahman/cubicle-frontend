@@ -25,7 +25,7 @@ const Navbar = () => {
               className="h-8 w-auto"
             />
             */}
-            <span className="text-2xl font-bold tracking-tight">TheCubicle</span>
+            <span className="text-2xl font-bold tracking-tight">The Cubicle</span>
           </Link>
 
           {/* Desktop Navigation */}

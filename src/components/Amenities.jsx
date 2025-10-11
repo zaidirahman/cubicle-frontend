@@ -28,7 +28,7 @@ export const allAmenities = [
   { name: "Prayer Area", icon: <Moon className="h-5 w-5 md:h-6 md:w-6" /> },
   { name: "Tech Development Services", icon: <Code className="h-5 w-5 md:h-6 md:w-6" /> },
   { name: "Meeting Spaces", icon: <LayoutGrid className="h-5 w-5 md:h-6 md:w-6" /> },
-  { name: "Skylight", icon: <Sun className="h-5 w-5 md:h-6 md:w-6" /> },
+  { name: "Sky Lounge", icon: <Sun className="h-5 w-5 md:h-6 md:w-6" /> },
 ];
 
 const AmenitiesSection = () => {

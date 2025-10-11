@@ -20,13 +20,13 @@ const Hero = () => {
             />
 
             <h2 className="text-2xl font-bold text-emerald-800 mb-4 md:text-3xl">
-              Your Premium Coworking Space in Gulberg
+              Your Premium Coworking Space in Lahore
             </h2>
 
             <p className="mb-8 text-gray-700 lg:mb-10 md:text-lg lg:text-xl leading-relaxed">
-              Whether you're brainstorming your next big idea or tackling your
-              to-do list, we're here to make work feel effortless and inspiring.
-              Let's build something amazing together!
+              Whether you're brainstorming your next big idea or tackling your to-do list, we're here to make work feel effortless and inspiring. 
+              We provide a collaborative environment with modern amenities, 
+              private offices, and shared co-working space designed to boost innovation, networking, and productivity. Let's build something amazing together!
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
