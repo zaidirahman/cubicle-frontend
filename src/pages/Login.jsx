@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Lock, Mail, Eye, EyeOff } from 'lucide-react';
+import { API_ENDPOINTS } from '../api';
 
 const Login = ({ setAuth }) => {
   const [email, setEmail] = useState('');
@@ -14,7 +15,7 @@ const Login = ({ setAuth }) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const res = await axios.post(process.env.REACT_APP_AUTH_API_URL, { email, password });
+      const res = await axios.post(API_ENDPOINTS.auth, { email, password });
       localStorage.setItem('token', res.data.token);
       setAuth(true);
       navigate('/admin');

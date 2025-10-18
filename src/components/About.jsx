@@ -1,8 +1,8 @@
 import heroimg from "../assets/hero.webp";
 import Logo from "../assets/LogoFull.svg";
 import { Link } from "react-router-dom";
+import { CONFIG } from "../api";
 
-const phoneNumber = process.env.REACT_APP_PHONE_NUMBER;
 
 const Hero = () => {
   return (
@@ -31,7 +31,7 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button
-                onClick={() => (window.location.href = `tel:${phoneNumber}`)}
+                onClick={() => (window.location.href = `tel:${CONFIG.phoneNumber}`)}
                 className="rounded-lg bg-white px-6 py-3 font-bold text-emerald-600 shadow-md transition-all hover:bg-blue-50 border border-emerald-200"
               >
                 Contact Us

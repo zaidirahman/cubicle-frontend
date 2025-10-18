@@ -8,6 +8,7 @@ import Footer from "../components/Footer";
 import Amenities from "../components/Amenities";
 import ScrollToHash from "../utils/ScrollToHash";
 import WhatsAppOverlay from "../components/WhatsAppButton";
+import { CONFIG } from "../api";
 
 const Home = () => {
   return (
@@ -24,7 +25,7 @@ const Home = () => {
         <Footer />
       </div>
         <WhatsAppOverlay 
-        phoneNumber={process.env.REACT_APP_PHONE_NUMBER}
+        phoneNumber={CONFIG.phoneNumber}
         message="Hello! I'm interested in your services."
       />
 

@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { UserCircle, MenuIcon, XIcon, ChevronDown, LogOut  } from 'lucide-react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import { UserCircle, MenuIcon, XIcon, ChevronDown, LogOut } from "lucide-react";
+import axios from "axios";
+import { API_ENDPOINTS } from '../api'
+
 
 // Main component
 // This component serves as the main dashboard for the admin panel
-const AdminDashboard = ({setAuth}) => {
+const AdminDashboard = ({ setAuth }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState('contacts');
+  const [activeTab, setActiveTab] = useState("contacts");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleLogout = () => {
@@ -117,9 +119,9 @@ const AdminDashboard = ({setAuth}) => {
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
                   <div className="px-4 py-2 border-b border-gray-100">
                     <p className="text-sm font-medium text-gray-900">
-                      Admin User
+                      Sheikh Moeez
                     </p>
-                    <p className="text-xs text-gray-500">admin@example.com</p>
+                    <p className="text-xs text-gray-500">admin@cubicle.pk</p>
                   </div>
                   <button
                     onClick={handleLogout}
@@ -161,12 +163,12 @@ const ContactManagement = () => {
   const fetchContacts = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${process.env.REACT_APP_CONTACT_API_URL}`);
-      
+      const response = await fetch(API_ENDPOINTS.contacts);
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      
+
       const data = await response.json();
       setContacts(data);
     } catch (err) {
@@ -182,32 +184,37 @@ const ContactManagement = () => {
       return;
     }
     try {
-      const response = await fetch(`${process.env.REACT_APP_CONTACT_API_URL}/${id}`, {
-        method: 'DELETE',
-      });
-  
+      const response = await fetch(
+        `${API_ENDPOINTS.contacts}/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
-      setContacts(contacts.filter(contact => contact._id !== id));
+
+      setContacts(contacts.filter((contact) => contact._id !== id));
       setSelectedContact(null);
     } catch (err) {
       console.error("Failed to delete contact:", err);
       alert("Failed to delete contact. Please try again.");
     }
   };
-  
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-semibold text-gray-800">Contact Form Submissions</h1>
-        <button 
+        <h1 className="text-2xl font-semibold text-gray-800">
+          Contact Form Submissions
+        </h1>
+        <button
           className="px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700"
           onClick={fetchContacts}
           disabled={loading}
         >
-          {loading ? 'Loading...' : 'Refresh'}
+          {loading ? "Loading..." : "Refresh"}
         </button>
       </div>
 
@@ -230,18 +237,28 @@ const ContactManagement = () => {
                   <p className="text-gray-500">Loading contacts...</p>
                 </div>
               ) : contacts.length > 0 ? (
-                contacts.map(contact => (
-                  <div 
-                    key={contact.id}
-                    className={`p-4 border-b border-gray-200 cursor-pointer hover:bg-gray-50 ${selectedContact && selectedContact.id === contact.id ? 'bg-emerald-50' : ''}`}
+                contacts.map((contact) => (
+                  <div
+                    key={contact._id}
+                    className={`p-4 border-b border-gray-200 cursor-pointer hover:bg-emerald-50 ${
+                      selectedContact && selectedContact._id === contact._id
+                        ? "bg-emerald-50"
+                        : ""
+                    }`}
                     onClick={() => setSelectedContact(contact)}
                   >
                     <div className="flex justify-between items-center">
                       <div>
-                        <h3 className="font-medium text-gray-800">{contact.name}</h3>
-                        <p className="text-sm text-gray-600">{contact.subject}</p>
+                        <h3 className="font-medium text-gray-800">
+                          {contact.name}
+                        </h3>
+                        <p className="text-sm text-gray-600">
+                          {contact.subject}
+                        </p>
                       </div>
-                      <span className="text-xs text-gray-500">{contact.date}</span>
+                      <span className="text-xs text-gray-500">
+                        {contact.date}
+                      </span>
                     </div>
                   </div>
                 ))
@@ -257,19 +274,35 @@ const ContactManagement = () => {
           <div className="w-full md:w-2/3 p-6">
             {selectedContact ? (
               <div className="flex justify-between items-center bg-white p-4 border rounded shadow-sm">
-              <div className="text-sm text-gray-700 space-y-1">
-                <div><span className="font-medium">Name:</span> {selectedContact.name}</div>
-                <div><span className="font-medium">Email:</span> {selectedContact.email}</div>
-                <div><span className="font-medium">Phone:</span> {selectedContact.phone}</div>
-                <div><span className="font-medium">Location:</span> {selectedContact.location}</div>
+                <div className="text-sm text-gray-700 space-y-1">
+                  <div>
+                    <span className="font-medium">Name:</span>{" "}
+                    {selectedContact.name}
+                  </div>
+                  <div>
+                    <span className="font-medium">Email:</span>{" "}
+                    {selectedContact.email}
+                  </div>
+                  <div>
+                    <span className="font-medium">Phone:</span>{" "}
+                    {selectedContact.phone}
+                  </div>
+                  <div>
+                    <span className="font-medium">Location:</span>{" "}
+                    {selectedContact.location}
+                  </div>
+                  <div>
+                    <span className="font-medium">Requirements:</span>{" "}
+                    {selectedContact.requirements}
+                  </div>
+                </div>
+                <button
+                  className="px-4 py-2 bg-rose-600 text-white text-sm rounded hover:bg-rose-700"
+                  onClick={() => handleDeleteContact(selectedContact._id)}
+                >
+                  Delete
+                </button>
               </div>
-              <button 
-                className="px-4 py-2 bg-rose-600 text-white text-sm rounded hover:bg-rose-700"
-                onClick={() => handleDeleteContact(selectedContact._id)}
-              >
-                Delete
-              </button>
-            </div>
             ) : (
               <div className="flex items-center justify-center h-full text-gray-500">
                 Select a contact to view details
@@ -290,7 +323,7 @@ const BlogManagement = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BLOG_API_URL}`)
+      .get(API_ENDPOINTS.blog)
       .then((res) => {
         setPosts(res.data);
         setIsLoading(false);
@@ -304,11 +337,11 @@ const BlogManagement = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [currentPost, setCurrentPost] = useState({
     _id: null,
-    title: '',
-    category: '',
-    content: '',
-    imageUrl:'',
-    status: 'draft'
+    title: "",
+    category: "",
+    content: "",
+    imageUrl: "",
+    status: "draft",
   });
 
   const handleEditPost = (post) => {
@@ -317,8 +350,8 @@ const BlogManagement = () => {
       title: post.title,
       category: post.category,
       content: post.content || "Post content goes here...",
-      imageUrl: post.imageUrl || '',
-      status: post.status
+      imageUrl: post.imageUrl || "",
+      status: post.status,
     });
     setIsEditing(true);
   };
@@ -326,59 +359,75 @@ const BlogManagement = () => {
   const handleNewPost = () => {
     setCurrentPost({
       id: null,
-      title: '',
-      category: '',
-      content: '',
-      imageUrl: '',
-      status: 'draft'
+      title: "",
+      category: "",
+      content: "",
+      imageUrl: "",
+      status: "draft",
     });
     setIsEditing(true);
   };
 
   const handleDeletePost = (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this post?");
-    
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this post?"
+    );
+
     if (!confirmDelete) return;
-  
-    axios.delete(`${process.env.REACT_APP_BLOG_API_URL}/${id}`)
+
+    axios
+      .delete(`${API_ENDPOINTS.blog}/${id}`)
       .then(() => {
-        setPosts(posts.filter(post => post._id !== id));
+        setPosts(posts.filter((post) => post._id !== id));
       })
-      .catch(err => console.error('Error deleting post:', err));
+      .catch((err) => console.error("Error deleting post:", err));
   };
 
   const handleSavePost = () => {
     console.log("handleSavePost triggered");
     console.log("Current Post:", currentPost);
-  
+
     if (currentPost._id) {
       console.log("Attempting to update post with ID:", currentPost._id);
-      
-      axios.put(`${process.env.REACT_APP_BLOG_API_URL}/${currentPost._id}`, currentPost)
+
+      axios
+        .put(
+          `${API_ENDPOINTS.blog}/${currentPost._id}`,
+          currentPost
+        )
         .then((res) => {
           console.log("Update response:", res.data);
-          setPosts(posts.map(post =>
-            post._id === currentPost._id ? res.data : post
-          ));
+          setPosts(
+            posts.map((post) =>
+              post._id === currentPost._id ? res.data : post
+            )
+          );
           setIsEditing(false);
         })
-        .catch(err => {
-          console.error("Error updating post:", err.response?.data || err.message);
+        .catch((err) => {
+          console.error(
+            "Error updating post:",
+            err.response?.data || err.message
+          );
         });
     } else {
       console.log("Creating new post with data:", currentPost);
-      
-      axios.post(`${process.env.REACT_APP_BLOG_API_URL}`, currentPost)
+
+      axios
+        .post(`${API_ENDPOINTS.blog}`, currentPost)
         .then((res) => {
           console.log("Create response:", res.data);
           setPosts([...posts, res.data]);
           setIsEditing(false);
         })
-        .catch(err => {
-          console.error("Error creating post:", err.response?.data || err.message);
+        .catch((err) => {
+          console.error(
+            "Error creating post:",
+            err.response?.data || err.message
+          );
         });
     }
-  };  
+  };
 
   return (
     <div>
@@ -419,7 +468,7 @@ const BlogManagement = () => {
             />
           </div>
           <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Image URL</label>
+            <label className="block text-gray-700 mb-2">Image URL (Sample: https://picsum.photos/1200/400)</label>
             <input
               type="text"
               className="w-full p-2 border border-gray-300 rounded"
@@ -495,7 +544,7 @@ const BlogManagement = () => {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {posts.map((post) => (
-                <tr key={post.id}>
+                <tr key={post._id}>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">
                       {post.title}
@@ -516,7 +565,7 @@ const BlogManagement = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {new Date(post.createdAt).toLocaleDateString('en-GB')}
+                    {new Date(post.createdAt).toLocaleDateString("en-GB")}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
@@ -551,7 +600,7 @@ const CareersManagement = () => {
     id: null,
     title: "",
     department: "",
-    type: "", 
+    type: "full-time",
     location: "",
     description: "",
     requirements: "",
@@ -561,7 +610,7 @@ const CareersManagement = () => {
   // Fetch jobs on component mount
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_JOB_API_URL}`)
+      .get(API_ENDPOINTS.jobs)
       .then((response) => setCareers(response.data))
       .catch((error) => console.error("Error fetching jobs:", error));
   }, []);
@@ -575,7 +624,7 @@ const CareersManagement = () => {
       location: job.location,
       description: job.description,
       requirements: job.requirements,
-      status: job.status
+      status: job.status,
     });
     setIsEditing(true);
   };
@@ -583,54 +632,66 @@ const CareersManagement = () => {
   const handleNewJob = () => {
     setCurrentJob({
       id: null,
-      title: '',
-      department: '',
-      type: '', 
-      location: '',
-      description: '',
-      requirements: '',
-      status: 'active'
+      title: "",
+      department: "",
+      type: "full-time",
+      location: "",
+      description: "",
+      requirements: "",
+      status: "active",
     });
     setIsEditing(true);
   };
 
   const handleDeleteJob = (id) => {
-    const confirmDelete = window.confirm("Are you sure you want to delete this job?");
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this job?"
+    );
     if (!confirmDelete) return;
     // Delete job
-    axios.delete(`${process.env.REACT_APP_JOB_API_URL}/${id}`)
-      .then(() => setCareers(careers.filter(job => job._id !== id)))
-      .catch((error) => console.error('Error deleting job:', error));
+    axios
+      .delete(`${API_ENDPOINTS.jobs}/${id}`)
+      .then(() => setCareers(careers.filter((job) => job._id !== id)))
+      .catch((error) => console.error("Error deleting job:", error));
   };
 
   const handleSaveJob = () => {
     if (currentJob.id) {
       // Update existing job
-      axios.put(`${process.env.REACT_APP_JOB_API_URL}/${currentJob.id}`, currentJob)
+      axios
+        .put(
+          `${API_ENDPOINTS.jobs}/${currentJob.id}`,
+          currentJob
+        )
         .then((response) => {
-          setCareers(careers.map(job => job._id === currentJob.id ? response.data : job));
+          setCareers(
+            careers.map((job) =>
+              job._id === currentJob.id ? response.data : job
+            )
+          );
           setIsEditing(false);
         })
-        .catch((error) => console.error('Error updating job:', error));
+        .catch((error) => console.error("Error updating job:", error));
     } else {
       // Create new job
-      axios.post(`${process.env.REACT_APP_JOB_API_URL}/create`, currentJob)
+      axios
+        .post(`${API_ENDPOINTS.jobs}/create`, currentJob)
         .then((response) => {
           setCareers([...careers, response.data]);
           setIsEditing(false);
         })
-        .catch((error) => console.error('Error creating job:', error));
+        .catch((error) => console.error("Error creating job:", error));
     }
   };
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // Months are 0-based
     const year = String(date.getFullYear()).slice(-2); // Get last two digits of the year
-    
+
     return `${day}/${month}/${year}`;
-  };  
+  };
 
   return (
     <div>

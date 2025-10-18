@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import { API_ENDPOINTS } from '../api';
 
 const BlogDetailPage = () => {
   const { slug } = useParams();
@@ -12,8 +13,8 @@ const BlogDetailPage = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const url = `${process.env.REACT_APP_BLOG_API_URL}/${slug}`
-        console.log("url:", url)
+        const url = `${API_ENDPOINTS.blog}/slug/${slug}`;
+        console.log("Fetching from URL:", url);        
         const res = await fetch(url);
         if (!res.ok) throw new Error('Failed to fetch blog');
         const data = await res.json();

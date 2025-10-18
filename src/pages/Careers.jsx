@@ -3,6 +3,7 @@ import { ChevronDown, ChevronUp, MapPin, Building, Briefcase } from 'lucide-reac
 import Navbar from '../components/Navbar';
 import backgroundImage from '../assets/background.webp';
 import Footer from '../components/Footer';
+import { API_ENDPOINTS, CONFIG } from '../api';
 
 const CareersPage = () => {
   const [expandedJob, setExpandedJob] = useState(null);
@@ -17,7 +18,7 @@ const CareersPage = () => {
   const fetchCareers = async () => {
     try {
       setLoading(true);
-      const response = await fetch(process.env.REACT_APP_JOB_API_URL);
+      const response = await fetch(API_ENDPOINTS.jobs);
       if (!response.ok) {
         throw new Error('Failed to fetch careers');
       }
@@ -62,7 +63,7 @@ const CareersPage = () => {
             </div>
           </div>
           <button 
-          onClick={() => handleWhatsAppClick({ phoneNumber: "923000140802", message: `I am interested in applying for the ${job.title} position at your company.` })}
+          onClick={() => handleWhatsAppClick({ phoneNumber: `${CONFIG.phoneNumber}`, message: `I am interested in applying for the ${job.title} position at your company.` })}
           className="bg-emerald-700 hover:bg-emerald-800 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 whitespace-nowrap ml-6">
             Apply Now
           </button>
@@ -158,7 +159,9 @@ const CareersPage = () => {
           </div>
         ) : (
           <div className="max-w-5xl mx-auto space-y-6">
-            {careers.map((job) => (
+            {careers
+            .filter((job) => job.status === "active")
+            .map((job) => (
               <div key={job.id || job._id} className="w-4/5 mx-auto">
                 <CareerCard job={job} />
               </div>

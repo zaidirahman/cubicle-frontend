@@ -1,8 +1,9 @@
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
+import { CONFIG } from "../api";
 
 const Map = () => {
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    googleMapsApiKey: CONFIG.googleMapsApiKey,
   });
 
   const containerStyle = {

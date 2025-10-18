@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
 import Hero from '../components/Hero';
+import { API_ENDPOINTS } from '../api'
+
 
 const BlogListingPage = () => {
   const [blogs, setBlogs] = useState([]);
@@ -16,7 +18,7 @@ const BlogListingPage = () => {
   const fetchBlogs = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${process.env.REACT_APP_BLOG_API_URL}`);
+      const response = await fetch(API_ENDPOINTS.blog);
       if (!response.ok) {
         throw new Error('Failed to fetch blogs');
       }
@@ -33,8 +35,8 @@ const BlogListingPage = () => {
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
       <div className="h-48 bg-gray-200 overflow-hidden">
         {blog.imageUrl ? (
-          <img 
-            src={blog.imageUrl} 
+          <img
+            src={blog.imageUrl}
             alt={blog.title}
             className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
           />
@@ -44,29 +46,34 @@ const BlogListingPage = () => {
           </div>
         )}
       </div>
-      
+
       <div className="p-6">
         <div className="mb-2">
           <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-semibold">
             {blog.category}
           </span>
         </div>
-        
+
         <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">
           {blog.title}
         </h3>
-        
+
         <div className="flex items-center justify-between">
-          <Link to={`/blog/${blog.slug}`} className="text-blue-600 hover:text-blue-800 font-medium">
+          <Link
+            to={`/blog/${blog.slug}`}
+            className="text-blue-600 hover:text-blue-800 font-medium"
+          >
             Read More →
           </Link>
-          
+
           {blog.status && (
-            <span className={`text-xs px-2 py-1 rounded-full ${
-              blog.status === 'published' 
-                ? 'bg-green-100 text-green-800' 
-                : 'bg-yellow-100 text-yellow-800'
-            }`}>
+            <span
+              className={`text-xs px-2 py-1 rounded-full ${
+                blog.status === "published"
+                  ? "bg-green-100 text-green-800"
+                  : "bg-yellow-100 text-yellow-800"
+              }`}
+            >
               {blog.status}
             </span>
           )}
