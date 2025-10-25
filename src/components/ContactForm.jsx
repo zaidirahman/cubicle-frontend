@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { CheckCircle, XCircle, Mail } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { API_ENDPOINTS } from '../api';
+import { trackEvent } from "../utils/MetaPixel";
+
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -50,6 +52,14 @@ const ContactForm = () => {
       if (response.ok) {
         // Show success message
         addNotification('success', 'Form submitted successfully!');
+
+        // Meta Pixel event 
+        trackEvent("Lead", {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          location: formData.location,
+        });
         
         // Clear form immediately
         setFormData({ 

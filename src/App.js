@@ -11,6 +11,7 @@ import Admin from "./pages/Admin";
 import { jwtDecode } from 'jwt-decode';
 import ScrollToTop from './utils/scrollToTop';
 import ScrollToHash from './utils/ScrollToHash';
+import MetaPixelListener from './utils/MetaPixel';
 
 function App() {
   const [auth, setAuth] = useState(false);
@@ -36,6 +37,7 @@ function App() {
       <Router>
         <ScrollToTop />
         <ScrollToHash />
+        <MetaPixelListener />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/amenities" element={<Amenities />} />

@@ -2,9 +2,19 @@ import heroimg from "../assets/hero.webp";
 import Logo from "../assets/LogoFull.svg";
 import { Link } from "react-router-dom";
 import { CONFIG } from "../api";
-
+import { trackEvent } from "../utils/MetaPixel"; 
 
 const Hero = () => {
+
+  const handleContactClick = () => {
+    trackEvent("Contact", { method: "Phone", section: "Hero" });
+    window.location.href = `tel:${CONFIG.phoneNumber}`;
+  };
+
+  const handleBookTourClick = () => {
+    trackEvent("Lead", { action: "BookTour", section: "Hero" });
+  };
+
   return (
     <section
       id="About"
@@ -31,13 +41,14 @@ const Hero = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
               <button
-                onClick={() => (window.location.href = `tel:${CONFIG.phoneNumber}`)}
+                onClick={handleContactClick} 
                 className="rounded-lg bg-white px-6 py-3 font-bold text-emerald-600 shadow-md transition-all hover:bg-blue-50 border border-emerald-200"
               >
                 Contact Us
               </button>
 
               <Link
+                onClick={handleBookTourClick}
                 className="rounded-lg bg-emerald-600 px-6 py-3 font-bold text-white shadow-md transition-all hover:bg-emerald-700 text-center"
                 to="/#Contact"
               >
